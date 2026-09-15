@@ -1,0 +1,65 @@
+@startuml
+
+package "org.example.Practica" {
+
+class Cadena {
+    - nombre : String
+    - listaProgramas : ArrayList<Programa>
+    --
+    + Cadena(nombre : String)
+    + anyadirPrograma(programa : Programa) : void
+    + mostrarListaProgramas() : void
+}
+
+class Programa {
+    - nombre : String
+    - cadena : Cadena
+    - temporadas : int
+    - listaEmpleados : ArrayList<Empleado>
+    - listaInvitados : ArrayList<Invitado>
+    - director : Empleado
+    --
+    + Programa(nombre : String, cadena : Cadena, nombre_director : String)
+    + anyadirEmpleado(nombre : String, cargo : String, director : Empleado) : void
+    + borrarEmpleado(empleado : Empleado) : void
+    + anyadirInvitado(nombre : String, profesion : String, temporada : int) : void
+    + borrarInvitado(invitado : Invitado) : void
+    + invitadosTemporada(temporada : int) : void
+    + vecesInvitado(nombre : String) : int
+    + rastrearInvitado(nombre : String) : void
+    + buscarInvitado(nombre : String) : boolean
+}
+
+class Empleado {
+    - id : String
+    - nombre : String
+    - cargo : String
+    - director : Empleado
+    --
+    + Empleado(nombre : String, cargo : String, director : Empleado)
+    + asignarDirector(director : Empleado) : void
+    + getCargo() : String
+    + setCargo(cargo : String) : String
+    + getDirector() : Empleado
+    + setDirector(director : Empleado) : void
+}
+
+class Invitado {
+    - nombre : String
+    - profesion : String
+    - fechaVisita : LocalDate
+    - temporada : int
+    --
+    + Invitado(nombre : String, profesion : String, temporada : int)
+
+}
+
+Cadena "1" o-- "0..*" Programa : contiene
+Programa "1" o-- "0..*" Empleado : emplea
+Programa "1" o-- "0..*" Invitado : invita
+Programa "1" --> "1" Empleado : director
+Empleado "0..1" --> "1" Empleado : director
+
+}
+
+@enduml
